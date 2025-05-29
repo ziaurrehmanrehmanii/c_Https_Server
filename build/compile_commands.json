@@ -1,0 +1,14 @@
+[
+{
+  "directory": "/home/ubuntu/c_Https_Server/build",
+  "command": "/usr/bin/g++ -DOPENSSL_FOUND -I/home/ubuntu/c_Https_Server/include -g -Wall -Wextra -Wpedantic -O0 -std=c++20 -o CMakeFiles/c_https_server.dir/main.cpp.o -c /home/ubuntu/c_Https_Server/main.cpp",
+  "file": "/home/ubuntu/c_Https_Server/main.cpp",
+  "output": "CMakeFiles/c_https_server.dir/main.cpp.o"
+},
+{
+  "directory": "/home/ubuntu/c_Https_Server/build",
+  "command": "/usr/bin/g++ -DOPENSSL_FOUND -I/home/ubuntu/c_Https_Server/include -g -Wall -Wextra -Wpedantic -O0 -std=c++20 -o CMakeFiles/c_https_server.dir/src/hdlibc.cpp.o -c /home/ubuntu/c_Https_Server/src/hdlibc.cpp",
+  "file": "/home/ubuntu/c_Https_Server/src/hdlibc.cpp",
+  "output": "CMakeFiles/c_https_server.dir/src/hdlibc.cpp.o"
+}
+]
