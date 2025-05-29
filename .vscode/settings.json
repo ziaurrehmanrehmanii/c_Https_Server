@@ -1,7 +1,10 @@
 {
     "files.associations": {
-        "*.h": "c",
-        "*.c": "c"
+        "*.h": "cpp",
+        "*.hpp": "cpp",
+        "*.cpp": "cpp",
+        "*.cxx": "cpp",
+        "*.cc": "cpp"
     },
     "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
     "C_Cpp.default.compileCommands": "${workspaceFolder}/build/compile_commands.json",

@@ -1,9 +1,10 @@
 cmake_minimum_required(VERSION 3.16)
-project(c_https_server VERSION 1.0.0 LANGUAGES C)
+project(c_https_server VERSION 1.0.0 LANGUAGES CXX)
 
-# Set C standard
-set(CMAKE_C_STANDARD 99)
-set(CMAKE_C_STANDARD_REQUIRED ON)
+# Set C++ standard
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 # Set build type to Debug by default
 if(NOT CMAKE_BUILD_TYPE)
@@ -11,20 +12,22 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 # Compiler flags
-set(CMAKE_C_FLAGS_DEBUG "-g -Wall -Wextra -Wpedantic -O0")
-set(CMAKE_C_FLAGS_RELEASE "-O3 -DNDEBUG")
+set(CMAKE_CXX_FLAGS_DEBUG "-g -Wall -Wextra -Wpedantic -O0")
+set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG")
 
 # Include directories
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 # Collect all source files from src directory and subdirectories
 file(GLOB_RECURSE SOURCES
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/*.c"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cxx"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cc"
 )
 
 # Create executable
 add_executable(${PROJECT_NAME}
-    ${CMAKE_CURRENT_SOURCE_DIR}/main.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
     ${SOURCES}
 )
 

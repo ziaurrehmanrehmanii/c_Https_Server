@@ -1,15 +1,15 @@
-# C HTTPS Server
+# C++ HTTPS Server
 
-A C-based HTTP/HTTPS server implementation for learning purposes.
+A C++20-based HTTP/HTTPS server implementation for learning purposes.
 
 ## Project Structure
 
 ```
 c_Https_Server/
-├── main.c              # Main entry point
-├── include/            # Header files (.h)
+├── main.cpp           # Main entry point
+├── include/            # Header files (.h, .hpp)
 │   └── ...            # Organized in subdirectories as needed
-├── src/               # Source files (.c)
+├── src/               # Source files (.cpp, .cxx, .cc)
 │   └── ...            # Organized in subdirectories as needed
 ├── build/             # Build output (generated)
 ├── CMakeLists.txt     # CMake configuration
@@ -24,7 +24,7 @@ c_Https_Server/
 
 Make sure you have the following installed:
 
-- GCC compiler
+- G++ compiler (with C++20 support)
 - CMake (3.16 or higher)
 - OpenSSL development libraries (optional, for HTTPS support)
 - GDB (for debugging)
@@ -34,7 +34,7 @@ Make sure you have the following installed:
 
 ```bash
 sudo apt update
-sudo apt install build-essential cmake libssl-dev gdb valgrind
+sudo apt install build-essential cmake libssl-dev gdb valgrind g++-10
 ```
 
 ## Building the Project
@@ -99,11 +99,11 @@ valgrind --leak-check=full --show-leak-kinds=all ./build/bin/c_https_server
 
 ## Development Notes
 
-- All header files should go in the `include/` directory
-- All source files should go in the `src/` directory
+- All header files should go in the `include/` directory (.h, .hpp)
+- All source files should go in the `src/` directory (.cpp, .cxx, .cc)
 - Subdirectories are automatically included in the build
-- CMake will automatically find and compile all `.c` files in `src/`
-- The project uses C99 standard
+- CMake will automatically find and compile all C++ files in `src/`
+- The project uses C++20 standard
 - Debug builds include `-g -Wall -Wextra -Wpedantic -O0`
 - Release builds include `-O3 -DNDEBUG`
 
@@ -115,10 +115,18 @@ valgrind --leak-check=full --show-leak-kinds=all ./build/bin/c_https_server
 
 ## Getting Started
 
-1. Start by implementing your main function in `main.c`
-2. Create header files in `include/` for your function declarations
-3. Implement your functions in source files under `src/`
+1. Start by implementing your main function in `main.cpp`
+2. Create header files in `include/` for your class declarations and function prototypes
+3. Implement your classes and functions in source files under `src/`
 4. Use the build tasks to compile and test your code
 5. Use the debugger to step through your code when needed
+
+Take advantage of C++20 features like:
+- Modules (when compiler support is available)
+- Concepts
+- Ranges
+- Coroutines
+- std::format
+- And much more!
 
 Happy coding! 🚀
