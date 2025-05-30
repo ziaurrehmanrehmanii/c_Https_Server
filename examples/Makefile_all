@@ -1,0 +1,90 @@
+# Comprehensive Makefile for all examples
+# All binaries go to ../bin directory
+
+CC = gcc
+CFLAGS = -Wall -Wextra -std=c99 -g -I../include
+
+# Directories
+SRC_DIR = ../src/linkedList
+BIN_DIR = ../bin
+OBJ_DIR = obj
+
+# Create directories
+$(shell mkdir -p $(BIN_DIR))
+$(shell mkdir -p $(OBJ_DIR))
+
+# LinkedList source files
+LINKEDLIST_SRCS = $(wildcard $(SRC_DIR)/*.c)
+LINKEDLIST_OBJS = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(LINKEDLIST_SRCS))
+
+# Example targets
+EXAMPLES = generic_list_example array_like_example comparison_example all_types_example final_test
+TARGETS = $(addprefix $(BIN_DIR)/, $(EXAMPLES))
+
+# Default target builds all examples
+all: $(TARGETS)
+
+# Generic list example
+$(BIN_DIR)/generic_list_example: $(OBJ_DIR)/generic_list_example.o $(LINKEDLIST_OBJS)
+	$(CC) $^ -o $@
+
+# Array-like example
+$(BIN_DIR)/array_like_example: $(OBJ_DIR)/array_like_example.o $(LINKEDLIST_OBJS)
+	$(CC) $^ -o $@
+
+# Comparison example
+$(BIN_DIR)/comparison_example: $(OBJ_DIR)/comparison_example.o $(LINKEDLIST_OBJS)
+	$(CC) $^ -o $@
+
+# All types example
+$(BIN_DIR)/all_types_example: $(OBJ_DIR)/all_types_example.o $(LINKEDLIST_OBJS)
+	$(CC) $^ -o $@
+
+# Final test example
+$(BIN_DIR)/final_test: $(OBJ_DIR)/final_test.o $(LINKEDLIST_OBJS)
+	$(CC) $^ -o $@
+
+# Compile linkedlist source files
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# Compile example source files
+$(OBJ_DIR)/%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# Individual targets for convenience
+generic: $(BIN_DIR)/generic_list_example
+array: $(BIN_DIR)/array_like_example
+comparison: $(BIN_DIR)/comparison_example
+all_types: $(BIN_DIR)/all_types_example
+final: $(BIN_DIR)/final_test
+
+# Run targets
+run-generic: $(BIN_DIR)/generic_list_example
+	cd .. && ./bin/generic_list_example
+
+run-array: $(BIN_DIR)/array_like_example
+	cd .. && ./bin/array_like_example
+
+run-comparison: $(BIN_DIR)/comparison_example
+	cd .. && ./bin/comparison_example
+
+run-all-types: $(BIN_DIR)/all_types_example
+	cd .. && ./bin/all_types_example
+
+run-final: $(BIN_DIR)/final_test
+	cd .. && ./bin/final_test
+
+# Clean build files
+clean:
+	rm -rf $(OBJ_DIR)
+	@if [ -d "$(BIN_DIR)" ]; then \
+		rm -f $(TARGETS); \
+	fi
+
+# Clean all binaries from bin directory
+clean-bin:
+	rm -f $(BIN_DIR)/*_example $(BIN_DIR)/final_test
+
+.PHONY: all clean clean-bin generic array comparison all_types final
+.PHONY: run-generic run-array run-comparison run-all-types run-final

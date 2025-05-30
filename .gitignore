@@ -4,6 +4,13 @@ bin/
 obj/
 out/
 
+# Example binaries (ensure all examples go to bin/)
+examples/*_example
+examples/all_types_example
+examples/array_like_example
+examples/comparison_example
+examples/final_test
+examples/generic_list_example
 # CMake generated files
 CMakeCache.txt
 CMakeFiles/

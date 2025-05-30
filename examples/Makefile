@@ -3,6 +3,10 @@ CC = gcc
 CFLAGS = -Wall -Wextra -std=c99 -g
 INCLUDE_DIR = ../include
 SRC_DIR = ../src/linkedList
+BIN_DIR = ../bin
+
+# Create bin directory if it doesn't exist
+$(shell mkdir -p $(BIN_DIR))
 
 # Source files
 SOURCES = generic_list_example.c \
@@ -17,8 +21,8 @@ SOURCES = generic_list_example.c \
 # Object files
 OBJECTS = $(SOURCES:.c=.o)
 
-# Target executable
-TARGET = generic_list_example
+# Target executable - now goes to bin directory
+TARGET = $(BIN_DIR)/generic_list_example
 
 # Default target
 all: $(TARGET)
