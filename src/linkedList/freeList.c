@@ -27,4 +27,4 @@ void freeList(Node **head, free_data_func_t freeData)
 
     *head = NULL; // Set head to NULL after freeing all nodes
     printf("List has been freed successfully.\n");
-};
+}

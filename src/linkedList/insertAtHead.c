@@ -26,4 +26,4 @@ void insertAtHead(Node **head, const void *data, size_t dataSize)
     temp->dataSize = dataSize;
     temp->next = *head;
     *head = temp;
-};
+}

@@ -38,4 +38,4 @@ void insertAtTail(Node **head, const void *data, size_t dataSize)
         current = current->next;
     }
     current->next = temp;
-};
+}
