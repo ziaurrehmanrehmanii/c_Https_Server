@@ -1,7 +1,9 @@
 #include "linkedList.h"
 #include <stdio.h>
 #include <stdlib.h>
-void insertAtHead(Node **head, int data)
+#include <string.h>
+
+void insertAtHead(Node **head, const void *data, size_t dataSize)
 {
     Node *temp = (Node *)malloc(sizeof(Node));
     if (!temp)
@@ -9,7 +11,19 @@ void insertAtHead(Node **head, int data)
         fprintf(stderr, "Memory allocation failed\n");
         exit(EXIT_FAILURE);
     }
-    temp->data = data;
+
+    // Allocate memory for the data
+    temp->data = malloc(dataSize);
+    if (!temp->data)
+    {
+        free(temp);
+        fprintf(stderr, "Memory allocation failed for data\n");
+        exit(EXIT_FAILURE);
+    }
+
+    // Copy the data
+    memcpy(temp->data, data, dataSize);
+    temp->dataSize = dataSize;
     temp->next = *head;
     *head = temp;
 };

@@ -1,0 +1,42 @@
+# Makefile for generic linked list example
+CC = gcc
+CFLAGS = -Wall -Wextra -std=c99 -g
+INCLUDE_DIR = ../include
+SRC_DIR = ../src/linkedList
+
+# Source files
+SOURCES = generic_list_example.c \
+          $(SRC_DIR)/createNode.c \
+          $(SRC_DIR)/insertAtHead.c \
+          $(SRC_DIR)/insertAtTail.c \
+          $(SRC_DIR)/deleteNode.c \
+          $(SRC_DIR)/displayList.c \
+          $(SRC_DIR)/freeList.c \
+          $(SRC_DIR)/helpers.c
+
+# Object files
+OBJECTS = $(SOURCES:.c=.o)
+
+# Target executable
+TARGET = generic_list_example
+
+# Default target
+all: $(TARGET)
+
+# Build target
+$(TARGET): $(OBJECTS)
+	$(CC) $(OBJECTS) -o $(TARGET)
+
+# Compile source files
+%.o: %.c
+	$(CC) $(CFLAGS) -I$(INCLUDE_DIR) -c $< -o $@
+
+# Clean
+clean:
+	rm -f $(OBJECTS) $(TARGET)
+
+# Run the example
+run: $(TARGET)
+	./$(TARGET)
+
+.PHONY: all clean run
