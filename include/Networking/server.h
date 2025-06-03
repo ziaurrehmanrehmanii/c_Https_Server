@@ -14,6 +14,7 @@ struct Server
     int port;                   // Port number to bind to
     int backlog;                // Backlog for the socket (number of connections to queue)
     struct sockaddr_in address; // Address structure to hold the socket address
+    int socket;                 // Socket file descriptor
     void (*launch)(void);       // Function pointer to launch the server
 };
 

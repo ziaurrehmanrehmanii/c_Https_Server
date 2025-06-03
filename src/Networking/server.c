@@ -21,5 +21,28 @@ struct Server server_constructor(int domain,
     server.address.sin_port = htons(port);             // Set the port number in network byte order
     server.address.sin_addr.s_addr = htonl(interface); // Set the interface address in network byte order
 
+    server.socket = socket(domain, service, protocol); // Create the socket with the specified parameters
+
+    if (server.socket < 0)
+    {
+        perror("Failed to create socket"); // Print error message if socket creation fails
+        exit(EXIT_FAILURE);                // Exit the program with failure status
+    }
+
+    // Bind the socket to the specified address and port
+    if (bind(server.socket, (struct sockaddr *)&server.address, sizeof(server.address)) < 0)
+    {
+        perror("Failed to bind socket"); // Print error message if binding fails
+        close(server.socket);            // Close the socket before exiting
+        exit(EXIT_FAILURE);              // Exit the program with failure status
+    }
+    // Set the server yo listening for incoming connections
+    if (listen(server.socket, server.backlog) < 0)
+    {
+        perror("Failed to listen on socket"); // Print error message if listening fails
+        close(server.socket);                 // Close the socket before exiting
+        exit(EXIT_FAILURE);                   // Exit the program with failure status
+    }
+
     return server; // Return the initialized server structure
 }
