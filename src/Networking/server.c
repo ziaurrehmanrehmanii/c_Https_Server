@@ -6,7 +6,7 @@ struct Server server_constructor(int domain,
                                  u_long interface,
                                  int port,
                                  int backlog,
-                                 void (*launch)(void))
+                                 void (*launch)(struct Server *server))
 {
     struct Server server;
 
@@ -43,6 +43,8 @@ struct Server server_constructor(int domain,
         close(server.socket);                 // Close the socket before exiting
         exit(EXIT_FAILURE);                   // Exit the program with failure status
     }
+
+    server.launch = launch; // Assign the launch function pointer to the server structure
 
     return server; // Return the initialized server structure
 }
