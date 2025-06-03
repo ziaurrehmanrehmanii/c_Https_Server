@@ -1,4 +1,6 @@
 #include <Networking/server.h>
+#include <string.h>
+#include <unistd.h>
 
 struct Server server_constructor(int domain,
                                  int service,
@@ -47,4 +49,23 @@ struct Server server_constructor(int domain,
     server.launch = launch; // Assign the launch function pointer to the server structure
 
     return server; // Return the initialized server structure
+}
+
+void launch(struct Server *server)
+{
+    while (1)
+    {
+
+        char buffer[1024] = {0};
+        printf("Server is running on port %d\n", server->port);
+        int address_length = sizeof(server->address);
+        int new_socket = accept(server->socket, (struct sockaddr *)&server->address, (socklen_t *)&address_length);
+        read(new_socket, buffer, 1024);
+        printf("Message received: %s\n", buffer);
+        // write the hello message to the client
+        const char *hello = "HTTP/1.1 200 OK\nDate: Mon, 27 Jul 2009 12:28:53 GMT\nServer: Apache/2.2.14 (Win32)\nLast-Modified: Wed, 22 Jul 2009 19:15:56 GMT\nContent-Length: 92\nContent-Type: text/html\n\n<html><body><h1>Hello from Zia</h1></body></html>";
+        write(new_socket, hello, strlen(hello));
+        printf("Hello message sent\n");
+        close(new_socket);
+    }
 }

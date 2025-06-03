@@ -5,6 +5,7 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+
 struct Server
 {
     int domain;                            // Domain of the socket (AF_INET for IPv4, AF_INET6 for IPv6)
@@ -28,5 +29,8 @@ struct Server server_constructor(int domain,
                                  int port,
                                  int backlog,
                                  void (*launch)(struct Server *server)); // Constructor for the server structure
+
+// Function declaration for the launch function
+void launch(struct Server *server);
 
 #endif
