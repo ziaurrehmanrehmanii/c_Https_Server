@@ -1,28 +1,25 @@
 #include <Networking/server.h>
 
-struct server server_contrector(int domain,
-                                int service,
-                                int protocol,
-                                u_long interface,
-                                int port,
-                                int backlog,
-                                void (*launch)(void))
+struct Server server_constructor(int domain,
+                                 int service,
+                                 int protocol,
+                                 u_long interface,
+                                 int port,
+                                 int backlog,
+                                 void (*launch)(void))
 {
-    struct server srv;
+    struct Server server;
 
-    srv.domain = domain;       // Set the domain of the socket
-    srv.service = service;     // Set the service type (TCP/UDP)
-    srv.protocol = protocol;   // Set the protocol (0 for default)
-    srv.interface = interface; // Set the interface to bind to
-    srv.port = port;           // Set the port number
-    srv.backlog = backlog;     // Set the backlog for the socket
+    server.domain = domain;       // Set the socket domain (AF_INET for IPv4, AF_INET6 for IPv6)
+    server.service = service;     // Set the service type (SOCK_STREAM for TCP, SOCK_DGRAM for UDP)
+    server.protocol = protocol;   // Set the protocol (0 for default)
+    server.interface = interface; // Set the interface to bind to (INADDR_ANY for all interfaces)
+    server.port = port;           // Set the port number to bind to
+    server.backlog = backlog;     // Set the backlog for the socket (number of connections to queue)
 
-    // Initialize the address structure
-    srv.address.sin_family = domain;                // Set the address family
-    srv.address.sin_port = htons(port);             // Convert port to network byte order
-    srv.address.sin_addr.s_addr = htonl(interface); // Convert interface to network byte order
+    server.address.sin_family = domain;                // Set the address family (AF_INET or AF_INET6)
+    server.address.sin_port = htons(port);             // Set the port number in network byte order
+    server.address.sin_addr.s_addr = htonl(interface); // Set the interface address in network byte order
 
-    srv.launch = launch; // Assign the launch function pointer
-
-    return srv; // Return the initialized server structure
+    return server; // Return the initialized server structure
 }
