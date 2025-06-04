@@ -5,13 +5,14 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <unistd.h>
 
 struct Server
 {
     int domain;                            // Domain of the socket (AF_INET for IPv4, AF_INET6 for IPv6)
     int service;                           // Service type (SOCK_STREAM for TCP, SOCK_DGRAM for UDP)
     int protocol;                          // Protocol (0 for default)
-    u_long interface;                      // Interface to bind to (INADDR_ANY for all interfaces)
+    unsigned long interface;               // Interface to bind to (INADDR_ANY for all interfaces)
     int port;                              // Port number to bind to
     int backlog;                           // Backlog for the socket (number of connections to queue)
     struct sockaddr_in address;            // Address structure to hold the socket address
@@ -25,7 +26,7 @@ struct Server
 struct Server server_constructor(int domain,
                                  int service,
                                  int protocol,
-                                 u_long interface,
+                                 unsigned long interface,
                                  int port,
                                  int backlog,
                                  void (*launch)(struct Server *server)); // Constructor for the server structure

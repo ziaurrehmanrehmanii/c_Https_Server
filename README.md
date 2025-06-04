@@ -1,6 +1,45 @@
 # C HTTPS Server
 
-A C-based HTTP/HTTPS server implementation for learning purposes.
+A C-based HTTP/HTTPS server implementation with **Forward and Reverse Proxy** capabilities for learning purposes.
+
+## 🌟 Features
+
+- **Basic HTTP Server**: Serves static content (original functionality)
+- **Forward Proxy**: Client → Proxy → Internet (web filtering, monitoring)
+- **Reverse Proxy**: Client → Proxy → Backend Server (load balancing, API gateway)
+- **Request Logging**: Monitor all proxy traffic
+- **Multi-Mode Support**: Single binary with multiple operation modes
+
+## 🚀 Quick Start
+
+### Basic HTTP Server (Original)
+```bash
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
+cmake --build build
+./build/bin/c_https_server
+# Visit: http://localhost:8080
+```
+
+### Proxy Examples
+```bash
+cd examples
+make -f Makefile_proxy all
+
+# Forward Proxy
+./bin/forward_proxy 3128
+
+# Reverse Proxy
+./bin/reverse_proxy 8080 httpbin.org 80
+
+# Multi-mode server
+./bin/multi_mode_server server 8000    # Basic server
+./bin/multi_mode_server forward 3128   # Forward proxy
+./bin/multi_mode_server reverse 8080 google.com 80  # Reverse proxy
+```
+
+📖 **See [Quick Proxy Guide](Docs/QUICK_PROXY_GUIDE.md) for 5-minute setup**
+
+📚 **See [Proxy Documentation](Docs/PROXY_DOCUMENTATION.md) for complete reference**
 
 ## Project Structure
 

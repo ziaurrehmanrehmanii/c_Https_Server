@@ -1,0 +1,78 @@
+# Makefile for Proxy Examples
+CC = gcc
+CFLAGS = -Wall -Wextra -Wpedantic -std=c99 -g -O0
+INCLUDES = -I../include
+LIBS = -lpthread -lm
+
+# Source directories
+SRCDIR = ../src
+INCDIR = ../include
+BUILDDIR = obj
+BINDIR = bin
+
+# Find source files
+NETWORKING_SOURCES = $(wildcard $(SRCDIR)/Networking/*.c)
+LINKEDLIST_SOURCES = $(wildcard $(SRCDIR)/linkedList/*.c)
+ALL_LIB_SOURCES = $(NETWORKING_SOURCES) $(LINKEDLIST_SOURCES)
+
+# Object files for library
+LIB_OBJECTS = $(ALL_LIB_SOURCES:$(SRCDIR)/%.c=$(BUILDDIR)/%.o)
+
+# Example executables
+EXAMPLES = forward_proxy reverse_proxy multi_mode_server
+EXAMPLE_TARGETS = $(EXAMPLES:%=$(BINDIR)/%)
+
+# Default target
+all: directories $(EXAMPLE_TARGETS)
+
+# Create directories
+directories:
+	@mkdir -p $(BUILDDIR)/Networking
+	@mkdir -p $(BUILDDIR)/linkedList
+	@mkdir -p $(BINDIR)
+
+# Build library object files
+$(BUILDDIR)/%.o: $(SRCDIR)/%.c
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+# Build examples
+$(BINDIR)/forward_proxy: forward_proxy.c $(LIB_OBJECTS)
+	$(CC) $(CFLAGS) $(INCLUDES) $< $(LIB_OBJECTS) -o $@ $(LIBS)
+
+$(BINDIR)/reverse_proxy: reverse_proxy.c $(LIB_OBJECTS)
+	$(CC) $(CFLAGS) $(INCLUDES) $< $(LIB_OBJECTS) -o $@ $(LIBS)
+
+$(BINDIR)/multi_mode_server: multi_mode_server.c $(LIB_OBJECTS)
+	$(CC) $(CFLAGS) $(INCLUDES) $< $(LIB_OBJECTS) -o $@ $(LIBS)
+
+# Clean build files
+clean:
+	rm -rf $(BUILDDIR) $(BINDIR)
+
+# Test targets
+test-forward:
+	@echo "Starting forward proxy on port 3128..."
+	@echo "Configure your browser to use HTTP proxy: localhost:3128"
+	./$(BINDIR)/forward_proxy 3128
+
+test-reverse:
+	@echo "Starting reverse proxy to httpbin.org..."
+	@echo "Test with: curl http://localhost:8080/get"
+	./$(BINDIR)/reverse_proxy 8080 httpbin.org 80
+
+test-multi:
+	@echo "Starting multi-mode server..."
+	@echo "Usage: $(BINDIR)/multi_mode_server [server|forward|reverse] [options]"
+	./$(BINDIR)/multi_mode_server
+
+# Help target
+help:
+	@echo "Available targets:"
+	@echo "  all           - Build all examples"
+	@echo "  clean         - Remove build files"
+	@echo "  test-forward  - Run forward proxy test"
+	@echo "  test-reverse  - Run reverse proxy test"
+	@echo "  test-multi    - Run multi-mode server"
+	@echo "  help          - Show this help"
+
+.PHONY: all clean directories test-forward test-reverse test-multi help
